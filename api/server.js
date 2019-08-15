@@ -11,6 +11,7 @@ server.use(express.json());
 server.get('/', (req, res) => {
   Shoutouts.find()
     .then(shoutouts => {
+      const messageOfTheDay = process.env.MOTD || "Catch 'em all'";
       res.status(200).json(shoutouts);
     })
     .catch(error => {
@@ -22,7 +23,6 @@ server.get('/', (req, res) => {
 server.post('/', (req, res) => {
   Shoutouts.add(req.body)
     .then(shoutout => {
-      const messageOfTheDay = process.env.MOTD || "Catch 'em all'";
       res.status(201).json({ motd: messageOfTheDay, shoutout });
     })
     .catch(error => {
